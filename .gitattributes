@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+# Text files
+*.xaml text
+*.cs text
+
+# Binary Files
+*.jpeg binary
+*.jpg binary
+*.png binary

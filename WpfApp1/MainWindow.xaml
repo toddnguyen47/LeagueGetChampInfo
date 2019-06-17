@@ -1,0 +1,101 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="League Champions" Height="600" Width="800"
+        FontSize="16"
+        Closing="Window_Closing">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Clear Saved Data" Click="ClearSavedItem_Click"/>
+                <Separator />
+                <MenuItem Header="_Exit" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="_About">
+                <MenuItem Header="_Check Version" Click="About_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Actual Content -->
+        <Grid>
+            <!-- Divide into two columns first -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Column -->
+            <Grid Grid.Column="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!-- Search Bar -->
+                <TextBlock Grid.Row="0">Enter Champion Name</TextBlock>
+                <TextBox Grid.Row="1" x:Name="ChampSearchTextbox" TextChanged="ChampSearchTextbox_TextChanged"></TextBox>
+
+                <!-- Champion List -->
+                <ListView Grid.Row="2" Margin="0 10 0 0" x:Name="ChampionListView" SelectionMode="Single" 
+                          ScrollViewer.CanContentScroll="False"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"></ListView>
+            </Grid>
+
+            <!-- Right Column -->
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 5 Recently Selected Champions -->
+                <TextBlock Grid.Row="0">Recent Champions Selected</TextBlock>
+                <ListView Grid.Row="1" x:Name="mostRecentChamps">
+                </ListView>
+
+                <!-- Sites to Visit -->
+                <TextBlock Grid.Row="2" Margin="0 10 0 0">Sites to Visit</TextBlock>
+                <Grid Grid.Row="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Row="0" Grid.Column="0" x:Name="checkUGG"
+                                  IsChecked="True">u.gg</CheckBox>
+                    <CheckBox Grid.Row="1" Grid.Column="0" x:Name="checkOpGG">op.gg</CheckBox>
+
+                    <CheckBox Margin="10 0 0 0" Grid.Row="0" Grid.Column="1"
+                                  x:Name="checkLolalytics">lolalytics</CheckBox>
+                    <CheckBox Margin="10 0 0 0" Grid.Row="1" Grid.Column="1"
+                                  x:Name="checkChampionGG">champion.gg</CheckBox>
+                </Grid>
+
+                <!-- Buttons -->
+                <TextBlock Grid.Row="4" Margin="0 20 0 0" TextWrapping="Wrap">
+                        NOTE: Champions with a space or ' in their name may not work on lolalytics.
+                </TextBlock>
+                <Button Grid.Row="5" Margin="0 5 0 0" x:Name="findBuildsBtn"
+                            Click="FindBuildsBtn_Click">Find Builds!</Button>
+
+                <!-- Images -->
+                <Image Grid.Row="6" Margin="0 10 0 0" Source="/images/woolol1.png" Width="{Binding ActualWidth,
+                        ElementName=findBuildsBtn}"></Image>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
