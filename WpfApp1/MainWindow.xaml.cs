@@ -16,7 +16,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         #region Variable declaration
-        public static String VERSION_NUMBER = "1.0";
+        public static String VERSION_NUMBER = "1.0.1";
         private const int MAX_RECENT_CHAMPS = 5;
 
         private List<String> allChampions = new List<String>();
@@ -318,6 +318,10 @@ namespace WpfApp1
                     {
                         String url1 = "";
                         String formattedChamp = this.currentlySelectedLvi.Content.ToString();
+
+                        // Special cases!
+                        // Nunu
+                        if (formattedChamp.Equals("Nunu & Willump")) formattedChamp = "Nunu";
 
                         // Replace all whitespace
                         formattedChamp = formattedChamp.Replace(" ", "").Replace("'", "");
