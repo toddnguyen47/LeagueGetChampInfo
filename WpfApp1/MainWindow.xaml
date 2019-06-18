@@ -47,55 +47,57 @@
             </Grid>
 
             <!-- Right Column -->
-            <Grid Grid.Column="1" Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- 5 Recently Selected Champions -->
-                <TextBlock Grid.Row="0">Recent Champions Selected</TextBlock>
-                <ListView Grid.Row="1" x:Name="mostRecentChamps">
-                </ListView>
-
-                <!-- Sites to Visit -->
-                <TextBlock Grid.Row="2" Margin="0 10 0 0">Sites to Visit</TextBlock>
-                <Grid Grid.Row="3">
+            <ScrollViewer Grid.Column="1">
+                <Grid Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Row="0" Grid.Column="0" x:Name="checkUGG"
-                                  IsChecked="True">u.gg</CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="0" x:Name="checkOpGG">op.gg</CheckBox>
+                    <!-- 5 Recently Selected Champions -->
+                    <TextBlock Grid.Row="0">Recent Champions Selected</TextBlock>
+                    <ListView Grid.Row="1" x:Name="mostRecentChamps">
+                    </ListView>
 
-                    <CheckBox Margin="10 0 0 0" Grid.Row="0" Grid.Column="1"
-                                  x:Name="checkLolalytics">lolalytics</CheckBox>
-                    <CheckBox Margin="10 0 0 0" Grid.Row="1" Grid.Column="1"
-                                  x:Name="checkChampionGG">champion.gg</CheckBox>
+                    <!-- Sites to Visit -->
+                    <TextBlock Grid.Row="2" Margin="0 10 0 0">Sites to Visit</TextBlock>
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Grid.Row="0" Grid.Column="0" x:Name="checkUGG"
+                                      IsChecked="True">u.gg</CheckBox>
+                        <CheckBox Grid.Row="1" Grid.Column="0" x:Name="checkOpGG">op.gg</CheckBox>
+
+                        <CheckBox Margin="10 0 0 0" Grid.Row="0" Grid.Column="1"
+                                      x:Name="checkLolalytics">lolalytics</CheckBox>
+                        <CheckBox Margin="10 0 0 0" Grid.Row="1" Grid.Column="1"
+                                      x:Name="checkChampionGG">champion.gg</CheckBox>
+                    </Grid>
+
+                    <!-- Buttons -->
+                    <TextBlock Grid.Row="4" Margin="0 20 0 0" TextWrapping="Wrap">
+                            NOTE: Champions with a space or ' in their name may not work on lolalytics.
+                    </TextBlock>
+                    <Button Grid.Row="5" Margin="0 5 0 0" x:Name="findBuildsBtn"
+                                Click="FindBuildsBtn_Click">Find Builds!</Button>
+
+                    <!-- Images -->
+                    <Image Grid.Row="6" Margin="0 10 0 0" Source="/images/woolol1.png" Width="{Binding ActualWidth,
+                            ElementName=findBuildsBtn}"></Image>
                 </Grid>
-
-                <!-- Buttons -->
-                <TextBlock Grid.Row="4" Margin="0 20 0 0" TextWrapping="Wrap">
-                        NOTE: Champions with a space or ' in their name may not work on lolalytics.
-                </TextBlock>
-                <Button Grid.Row="5" Margin="0 5 0 0" x:Name="findBuildsBtn"
-                            Click="FindBuildsBtn_Click">Find Builds!</Button>
-
-                <!-- Images -->
-                <Image Grid.Row="6" Margin="0 10 0 0" Source="/images/woolol1.png" Width="{Binding ActualWidth,
-                        ElementName=findBuildsBtn}"></Image>
-            </Grid>
+            </ScrollViewer>
         </Grid>
     </DockPanel>
 </Window>
