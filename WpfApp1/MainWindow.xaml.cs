@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace WpfApp1
 {
@@ -16,7 +17,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         #region Variable declaration
-        public static String VERSION_NUMBER = "1.0.1";
+        public static String VERSION_NUMBER = "1.1.0";
         private const int MAX_RECENT_CHAMPS = 5;
 
         private List<String> allChampions = new List<String>();
@@ -26,6 +27,7 @@ namespace WpfApp1
         private CustomListViewItem currentlySelectedLvi = null;
 
         private string[] m_siteNames = { "checkUGG", "checkOpGG", "checkLolalytics", "checkChampionGG" };
+        private Dictionary<String, String> m_lolalyticsChampNames;
 
         private CustomListViewItem[] m_arrRecentlyPlayedChamps = new CustomListViewItem[5];
         #endregion
@@ -41,6 +43,7 @@ namespace WpfApp1
             this.readInCsvFile();
             this.setupListView();
             this.readjsonSettingsFile();
+            this.setupLolalyticsChampNames();
         }
 
         /// <summary>
@@ -155,6 +158,23 @@ namespace WpfApp1
                 this.mostRecentChamps.Items.Add(lvi);
                 this.m_arrRecentlyPlayedChamps[recentPlayedIndex++] = lvi;
             }
+        }
+
+
+        /// <summary>
+        /// Setup the HashSet of champ names for lolalytics.
+        /// The key will be the lowercase name of the champion with no special characters.
+        /// The value will be the value that lolalytics expects
+        /// </summary>
+        private void setupLolalyticsChampNames()
+        {
+            this.m_lolalyticsChampNames = new Dictionary<String, String>();
+            this.m_lolalyticsChampNames.Add("Chogath".ToLower(), "Chogath");
+            this.m_lolalyticsChampNames.Add("Kaisa".ToLower(), "Kaisa");
+            this.m_lolalyticsChampNames.Add("Khazix".ToLower(), "Khazix");
+            this.m_lolalyticsChampNames.Add("KogMaw".ToLower(), "KogMaw");
+            this.m_lolalyticsChampNames.Add("RekSai".ToLower(), "RekSai");
+            this.m_lolalyticsChampNames.Add("Velkoz".ToLower(), "Velkoz");
         }
 
         public bool ChampNameFilter(String item)
@@ -308,6 +328,9 @@ namespace WpfApp1
                 // Start the website
                 int idListLength = this.m_siteNames.Length;
 
+                // Get a RegEx pattern: delete all characters that is not a-z, A-Z, or 0-9
+                string pattern = "[^a-zA-Z0-9]";
+
                 for (int i = 0; i < idListLength; i++)
                 {
                     String id1 = this.m_siteNames[i];
@@ -323,8 +346,9 @@ namespace WpfApp1
                         // Nunu
                         if (formattedChamp.Equals("Nunu & Willump")) formattedChamp = "Nunu";
 
-                        // Replace all whitespace
-                        formattedChamp = formattedChamp.Replace(" ", "").Replace("'", "");
+                        // Replace using regex pattern:
+                        // delete all characters that is not a-z, A-Z, or 0-9
+                        formattedChamp = Regex.Replace(formattedChamp, pattern, "");
 
                         switch (i)
                         {
@@ -340,6 +364,11 @@ namespace WpfApp1
                                 break;
                             // lolalytics
                             case 2:
+                                // Need to replace the formatted champ name first, if needed
+                                string fc = formattedChamp.ToLower();
+                                if (this.m_lolalyticsChampNames.ContainsKey(fc))
+                                    formattedChamp = this.m_lolalyticsChampNames[fc];
+
                                 url1 = String.Format("https://lolalytics.com/ranked/worldwide/platinum/plus/champion/{0}",
                                 formattedChamp);
                                 break;
