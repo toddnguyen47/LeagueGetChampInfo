@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace WpfApp1
 {
@@ -17,7 +18,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         #region Variable declaration
-        public static String VERSION_NUMBER = "1.1.0";
+        public static String VERSION_NUMBER = "1.1.1";
         private const int MAX_RECENT_CHAMPS = 5;
 
         private List<String> allChampions = new List<String>();
@@ -315,6 +316,30 @@ namespace WpfApp1
             });
         }
 
+
+        /// <summary>
+        /// Lowercase all characters, except the first character. The first character will be uppercase.
+        /// </summary>
+        /// <param name="input">String input</param>
+        /// <returns>Converted String</returns>
+        public String ToLowerExceptFirstChar(String input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // Uppercase first character
+            sb.Append(Char.ToUpper(input[0]));
+
+            // Lowercase the rest
+            for (int i = 1, i2 = input.Length; i < i2; i++)
+            {
+                char curChar = input[i];
+                sb.Append(Char.ToLower(curChar));
+            }
+
+            return sb.ToString();
+        }
+
+
         /// <summary>
         /// Handle what happens when the user clicks on the "Find Builds" button.
         /// </summary>
@@ -349,6 +374,9 @@ namespace WpfApp1
                         // Replace using regex pattern:
                         // delete all characters that is not a-z, A-Z, or 0-9
                         formattedChamp = Regex.Replace(formattedChamp, pattern, "");
+
+                        // Uppercase first character, lowercase the rest
+                        formattedChamp = this.ToLowerExceptFirstChar(formattedChamp);
 
                         switch (i)
                         {
